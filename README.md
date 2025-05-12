@@ -1,4 +1,5 @@
 # WAIA - WhatsApp AI Assistant 🤖📱
+[![Docker Pulls](https://img.shields.io/docker/pulls/ritabanguha/wapp-ai.svg)](https://hub.docker.com/r/ritabanguha/wapp-ai)
 
 **WAIA** connects to your WhatsApp account via the **Linked Devices** feature and responds to incoming messages using a selected **Large Language Model (LLM)** via **Ollama**. Designed for lightweight deployment, WAIA enhances the standard chat experience with contextual understanding, configurable responses, and support for real-time external data via APIs.
 
@@ -33,6 +34,8 @@
 Whatsapp bot connected.
 ```
 WAIA is now ready to listen and respond!
+
+
 
 ---
 
@@ -98,8 +101,48 @@ WAIA integrates with external APIs to provide real-time, enriched responses.
 - Each API contains tags that WAIA uses to match with LLM query context
 - Examples included: **Time API**, **Weather API**
 
-This acts as a lightweight data augmentation mechanism — without relying on LLM-native tool calling or heavy RAG implementations.
+This acts as a lightweight data augmentation mechanism, without relying on LLM-native tool calling or heavy RAG implementations.
 
+---
+## 📦 Deployment with Docker
+
+WAIA can be quickly deployed using either `docker run` or `docker-compose`.
+
+---
+
+### 🐳 Docker Run
+
+```
+docker run -it \
+  --name wapp-ai \
+  --restart unless-stopped \
+  ritabanguha/wapp-ai:latest
+```
+✅ Optional: Mount local folders if you're customizing APIs or config files:
+```
+docker run -it \
+  --name wapp-ai \
+  -v $(pwd)/APIs:/usr/src/app/APIs \
+  -v $(pwd)/Data:/usr/src/app/Data \
+  --restart unless-stopped \
+  ritabanguha/wapp-ai:latest
+```
+🧱 Docker Compose
+```
+services:
+  wapp-ai:
+    image: ritabanguha/wapp-ai:latest
+    container_name: wapp-ai
+#    volumes:
+#      - ./APIs:/usr/src/app/APIs     # Uncomment if providing custom APIs
+#      - ./Data:/usr/src/app/Data     # Uncomment if providing config manually
+    restart: unless-stopped
+```
+To start the service, run:
+
+```
+docker-compose up -d
+```
 ---
 
 ## ⚠️ Notes
