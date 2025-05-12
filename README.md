@@ -1,4 +1,4 @@
-# WAIA - WhatsApp AI Assistant 🤖📱
+# WAIA - WhatsApp AI Autobot 🤖📱
 [![Docker Pulls](https://img.shields.io/docker/pulls/ritabanguha/wapp-ai.svg)](https://hub.docker.com/r/ritabanguha/wapp-ai)
 
 **WAIA** connects to your WhatsApp account via the **Linked Devices** feature and responds to incoming messages using a selected **Large Language Model (LLM)** via **Ollama**. Designed for lightweight deployment, WAIA enhances the standard chat experience with contextual understanding, configurable responses, and support for real-time external data via APIs.
