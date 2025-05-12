@@ -124,4 +124,4 @@ Have ideas to improve WAIA? Pull requests, prompt examples, or API suggestions a
 
 ## 📜 License
 
-**MIT License** – See the [`LICENSE`](./LICENSE) file for details.
+**GNU General Public License v3.0** – See the [`LICENSE`](./LICENSE) file for details.
