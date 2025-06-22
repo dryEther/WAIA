@@ -1,143 +1,181 @@
-WAIA - Whatsapp AI Assistant
+# WAIA - WhatsApp AI Autobot 🤖📱
+[![Docker Pulls](https://img.shields.io/docker/pulls/ritabanguha/wapp-ai.svg)](https://hub.docker.com/r/ritabanguha/wapp-ai)
 
-This aplication connects to a Whatsapp Account via Linked Devices Feature (scan QR code at the time of initilizaiton)
-and when any msg is received, program trys to respond to it using a selected LLM via Ollama.
-
-Initialization:
-on first run, program will ask to scan a qr code in the terminal with your whatsapp linked device scanner
-to establish a connection.
-once connected, the app reads the config.json(from /usr/src/app/Data/ ) file for basic configuration details.
-Programs needs atleast 
-    i.      the admin(wa username / accountnumber =~ countrycode+contactnumber )
-    ii.     the ollama endpoint
-    iii.    default model 
-to start with.
-Please change the dummy values in the config.json file with your specific values.
-
-After Initialization completes a message is logged: Whatsapp bot connected.
-Now the program is ready to respond to any msg received.
-
-Config Features:
-
-Admin: 
-    Admin is the contact who will have Admin commands access to alter the config file. Commands(Discussed later) start with !.
-Recipient:
-    Name of the Account owner, who the AI should impersonate as.
-Locaiton: 
-    Admin Location information for contextual awareness for the AI
-TimeZone:
-    Admin TimeZone info for contextual awareness for the AI
-SelectedModel: 
-    Default Model for LLM query
-Debug:
-    If set to true, application log will have more messages.
-APIFolder:
-    path for the API folder. API folder contains external data sources that the AI can use for real time reference.
-Ollama Url:
-    The Ollama endpoint
-InvertIgnore:
-    This is related to the IgnoreContacts list. If set to true, 
-    program will only respond to contacts maintained in the IgnoreContacts list.
-IgnoreContacts:
-    This is a array of contacts for whom program will not respond.
-HCount:
-    Number of messages from conversation history to consider for contextual awareness.
-PromptsFilePath:
-    Path for the Prompts file. Prompts from this file is used to make queary to the LLM.
-PromptsReloadIntervalMs:
-    at what frequency to check for changes in the prompt file and reload.
-
-
-The Admin Commands:
-
-!model:
-    This command displays a list of available LLMs currently in Ollama and allows to select any one of them as default LLM for responses.
-!admin:
-    This command allow to delidate the admin priviledges to another contact.
-    Command: !admin <user_name>
-!ignore:
-    This command allows to add any contact/group to ignore list. Once ignored program does not respond to that contact any more.
-    Command: !ignore <user_name> / <user_id> / <countrycode+number>
-!ignorelist:
-    This command will list all the contacts which are added to the list to ignore.
-!unignore:
-    This command will let the admin remove a contact from the ignore list.
-    Command: !unignore <user_name> / <user_id> / <countrycode+number>
-!prompt:
-    This command allows to add remove modify prompts which are being used to call the LLM.
-    
-    The prompt file:  
-        The prompt file should always contain some default prompts. The default prompts are the generic prompts that are 
-        going to be used to make the LLM calls for all contacts.
-
-        There are 4 main prompt sets.
-        1. Memory Check:
-           This set of prompts are used to build the system context to determine if the user query needs conversation history
-           for context. This is the 1st query to the LLM.
-
-        2. Tag Check:
-            This set of prompts are to help the AI beter process the list of API Tags and determine 
-            if the AI needs to call any of the available APIs for external data for context enrichment.
-
-        3. API Check:
-            This set of prompts are used to help the API prepare proper payloads for each of the API it has to call
-            to fetch necessary external/realtime data
-        4. Response Check
-            This is the final System prompt that will be used to get the response from the AI which will be sent back to the contact.
-
-        Additionaly under the default category there are 2 more prompt sets.
-        5. About_Admin
-            This set is used to provide PII about the Admin for context enrichment in the above 4 cases on a need basis.
-        6. Add_Info
-            This set is used to provide adiitonal any kind of information related to the Admin 
-            for context enrichment in the above 4 cases on a need basis.
-
-    To customize these prompts for any contact, separate prompts can be added under the contact's name/id.
-    for any of the 6 Prompt types, if a contact specific prompt set is found, that will take precedence over the default prompt.
-
-    Command: !prompt Add <contact> <prompt_Type> <prompt text>
-    in order to add new statement to a prompt type for a contact.
-    in order to override the default value for the prompt type, simply send default as the contact.
-
-    Command: !prompt list <Contact>
-    This will list all the prompts for each prompt type for that specific contact of default.
-
-    Command: !prompt remove <contact> <prompt_Type> <prompt_number>
-        This will delete the line from the promptlist using the prompt number. 
-        prompt number can be identified from the prompt list.
-!webui:
-    There is a webUI added to manage the configs and prompts.
-    The webui can be enabled disabled by the admin using commands.
-    
-    Command: !webui on ('true' is also accepted)
-    This will run the webui on port 3000. this port needs to be mapped out in the docker config.
-
-    Command: !webui off ('false' is also accepted)
-    This will stop the webui.
-
-APIs:
-
-Since local models will not have realtime data or analytic features,
-this proram tries to address that gap by establishing a capability of calling external APIs for data enrichment.
-We have an APIs folder. the path of this folder is determined based on the config attribute APIFolder.
-
-we have just included a Time API and a Weather API as example.
-more APIs can be added just by placing a josn file with api details in correct format.
-Program uses the tags from the api fiels and allows the LLM to determine which tags are relevant for the current user query.
-Then those APIs are called using the API payload built by the LLM and the respnses are absorbed by the LLM for final response.
+**WAIA** connects to your WhatsApp account via the **Linked Devices** feature and responds to incoming messages using a selected **Large Language Model (LLM)** via **Ollama**. Designed for lightweight deployment, WAIA adds an AI to the standard chat experience with contextual understanding, configurable responses, and support for real-time external data via APIs.
 
 ---
-The program doest directly implement a RAG and also Tools/Functions of certain LLMs are not utilized and external data extraction
-is handled by the program itself. 
-This current approach allows the program to be lightweight and less resouce intensive for the purpose.
-Ofcourse we will continue to enhance the program to Implement proger RAG, vector Storage and LLM Funcitons along with other AI frameworks.
 
-Note:
-This is a completely vive coded app.
-Consider this as a very early beta.
-All these years of selfhosting so many applications, this is kind of a opportunity for me to contribute back to the community.
-Please try out the app.
-Please share your valuable feedback and errors that you face.
+## 🚀 Features
 
-        
+- ✅ Connects via WhatsApp's QR code-based Linked Devices  
+- ✅ Responds to messages using LLMs from an Ollama instance  
+- ✅ Configurable admin control and prompt management  
+- ✅ Lightweight external API integration (e.g., Weather, Time)  
+- ✅ Easy-to-customize system prompts for different users or scenarios  
+- ✅ Debug mode for advanced logging  
+- ✅ Early support for contextual awareness using conversation history and user metadata  
 
+---
+
+## 🛠️ Initialization & Setup
+
+1. Clone the repository and run the program.
+2. On the first run, you'll be prompted to scan a QR code using WhatsApp's Linked Devices scanner.
+3. Once connected, WAIA reads from a config file located at:
+```
+/usr/src/app/config.json
+```
+4. Update this file with your custom values:
+- `admin`: Your WhatsApp contact (format: `countrycode+number`)
+- `ollamaUrl`: The endpoint for Ollama
+- `selectedModel`: Default LLM to use
+5. On successful setup, you’ll see:
+```
+Whatsapp bot connected.
+```
+WAIA is now ready to listen and respond!
+
+
+
+---
+
+## 🔧 Configuration Options
+
+| Key                     | Description                                                                 |
+|-------------------------|-----------------------------------------------------------------------------|
+| `admin`                 | WhatsApp contact with command access                                        |
+| `recipient`             | Name the AI should impersonate                                              |
+| `location` / `timeZone` | For contextual awareness                                                    |
+| `selectedModel`         | Default LLM model                                                           |
+| `debug`                 | Enables verbose logging                                                     |
+| `apiFolder`             | Folder path containing API definitions                                      |
+| `ollamaUrl`             | Ollama server endpoint                                                      |
+| `invertIgnore`          | If `true`, only respond to contacts listed in `ignoreContacts`              |
+| `ignoreContacts`        | List of users to ignore                                                     |
+| `hCount`                | Number of past messages used for context                                    |
+| `promptsFilePath`       | Path to system prompts file                                                 |
+| `promptsReloadIntervalMs` | How frequently to reload the prompts file (in milliseconds)              |
+
+---
+
+## 🔐 Admin Commands
+
+WAIA supports admin-only commands (prefixed with `!`) for live configuration changes:
+
+### 📌 LLM Control
+- `!model`: View and select available LLMs from Ollama
+
+### 👤 Admin Management
+- `!admin <username>`: Delegate admin rights
+
+### 🚫 Contact Management
+- `!ignore <contact>`: Ignore a user or group  
+- `!ignorelist`: View ignored contacts  
+- `!unignore <contact>`: Remove a user from the ignore list  
+
+### 🧩 Prompt Customization
+- `!prompt Add <contact> <prompt_Type> <prompt>`: Add prompt for a contact or `default`  
+- `!prompt list <contact>`: View prompt sets  
+- `!prompt remove <contact> <prompt_Type> <prompt_number>`: Remove a prompt  
+
+### 🌐 WebUI
+    A web UI has been added to manage the configs and prompts.
+    The web UI can be enabled or disabled by the admin using commands.
+    
+- `!webui on` ('true' is also accepted)
+    This will run the web UI on port 3000.
+    This port needs to be mapped out in the Docker config.
+
+- `!webui off` ('false' is also accepted)
+    This will stop the web UI.
+
+---
+
+## 🧠 Prompt Types
+
+WAIA uses structured system prompts to enhance interaction quality. Prompts can be defined globally (`default`) or per-contact:
+
+- **Memory Check** – Determines need for chat history  
+- **Tag Check** – Identifies if API data is needed  
+- **API Check** – Prepares payloads for APIs  
+- **Response Check** – Final LLM query for generating responses  
+- **About_Admin** – PII info used when necessary  
+- **Add_Info** – Any extra context for better responses  
+
+---
+
+## 🌐 API Integration
+
+WAIA integrates with external APIs to provide real-time, enriched responses.
+
+- Define APIs as `.json` files inside the configured `apiFolder`
+- Each API contains tags that WAIA uses to match with LLM query context
+- Examples included: **Time API**, **Weather API**
+
+This acts as a lightweight data augmentation mechanism, without relying on LLM-native tool calling or heavy RAG implementations.
+
+---
+## 📦 Deployment with Docker
+
+WAIA can be quickly deployed using either `docker run` or `docker-compose`.
+
+---
+
+### 🐳 Docker Run
+
+```
+docker run -it \
+  --name wapp-ai \
+  --restart unless-stopped \
+  ritabanguha/wapp-ai:latest
+```
+✅ Optional: Mount local folders if you're customizing APIs or config files:
+```
+docker run -it \
+  --name wapp-ai \
+  -v $(pwd)/APIs:/usr/src/app/APIs \
+  -v $(pwd)/Data:/usr/src/app/Data \
+  --restart unless-stopped \
+  ritabanguha/wapp-ai:latest
+```
+🧱 Docker Compose
+```
+services:
+  wapp-ai:
+    image: ritabanguha/wapp-ai:latest
+    container_name: wapp-ai
+#    volumes:
+#      - ./APIs:/usr/src/app/APIs     # Uncomment if providing custom APIs
+#      - ./Data:/usr/src/app/Data     # Uncomment if providing config manually
+    restart: unless-stopped
+```
+To start the service, run:
+
+```
+docker-compose up -d
+```
+---
+
+## ⚠️ Notes
+
+- This is a **vibe-coded**, very early **beta release**
+- The goal is to enable local, private, intelligent WhatsApp automation with minimal overhead
+- Contributions, feedback, and bug reports are **highly appreciated** 🙏
+
+---
+
+## 📢 Contribute
+
+Have ideas to improve WAIA? Pull requests, prompt examples, or API suggestions are welcome!
+
+---
+
+## 🧑‍💻 Author's Note
+
+> "After years of self-hosting and using community-built apps, this project is my way of giving back. It’s experimental, it’s rough around the edges — but it’s open and evolving."
+
+---
+
+## 📜 License
+
+**GNU General Public License v3.0** – See the [`LICENSE`](./LICENSE) file for details.
