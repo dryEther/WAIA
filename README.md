@@ -79,7 +79,7 @@ WAIA supports admin-only commands (prefixed with `!`) for live configuration cha
 - `!prompt remove <contact> <prompt_Type> <prompt_number>`: Remove a prompt  
 
 ### 🌐 WebUI
-    A web UI has been added to manage the configs and prompts.
+-    A web UI has been added to manage the configs and prompts.
     The web UI can be enabled or disabled by the admin using commands.
     
 - `!webui on` ('true' is also accepted)
