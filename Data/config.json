@@ -1,0 +1,21 @@
+{
+  "admin": "19000090000",
+  "recipient": "dryEther",
+  "location": "Kolkata, India",
+  "timezone": "Asia/Kolkata",
+  "selectedModel": "gemma3:12b",
+  "maxTokens": 2000,
+  "hCount": 5,
+  "debug": true,
+  "apiFolder": "./APIs",
+  "promptsFilePath": "./Data/prompts.json",
+  "promptsReloadIntervalMs": 20000,
+  "ollama": {
+    "baseUrl": "http://localhost:11434"
+  },
+  "invertIgnore": true,
+  "ignoredContacts": [
+    "my X",
+    "my Y"
+  ]
+}

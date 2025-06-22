@@ -1,0 +1,23 @@
+{
+  "name": "wapp-ai",
+  "version": "0.2.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ritaban Guha",
+  "license": "ISC",
+  "dependencies": {
+    "baileys": "^6.7.16",
+    "mustache": "^4.2.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "description": "WAIA - Whatsapp AI Assistant",
+  "keywords": [
+    "whatsapp",
+    "ollama",
+    "AI",
+    "assistant",
+    "messages"
+  ]
+}

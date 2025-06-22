@@ -1,0 +1,36 @@
+[
+  {
+    "name": "CityTime",
+    "description": "Returns the current time for a given timezone.",
+    "tags": [
+      "time",
+      "timezone",
+      "clock"
+    ],
+    "method": "GET",
+    "url": "https://timeapi.io/api/time/current/zone?timeZone={timezone}",
+    "params": {
+      "timezone": "string"
+    },
+    "responseFields": [
+      "dateTime"
+    ]
+  },
+  {
+    "name": "GeoTime",
+    "description": "Returns the current time for a given lattitude & longitude.",
+    "tags": [
+      "time",
+      "timezone",
+      "clock"
+    ],
+    "method": "GET",
+    "url": "https://timeapi.io/api/time/current/zone?timeZone={timezone}",
+    "params": {
+      "timezone": "string"
+    },
+    "responseFields": [
+      "dateTime"
+    ]
+  }
+]

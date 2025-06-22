@@ -1,0 +1,23 @@
+[
+  {
+    "name": "WeatherAPI",
+    "description": "Returns current weather info for a city.",
+    "tags": [
+      "weather",
+      "temperature",
+      "forecast"
+    ],
+    "method": "GET",
+    "url": "https://api.weatherapi.com/v1/current.json?key={key}&q={q}",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "params": {
+      "key": "API_KEY",
+      "q": "City Name"
+    },
+    "responseFields": [
+      "current.temp_c"
+    ]
+  }
+]

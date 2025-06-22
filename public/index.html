@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WAIA - Configuration</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+</head>
+
+<body>
+    <div class="sidebar" id="sidebar">
+        <h2><span class="sidebar-label">WAI</span>🤖</h2>
+        <ul class="sidebar-links">
+            <li><a href="#" data-page="config" class="sidebar-button">🛠️<span class="sidebar-label"> Config</span></a>
+            </li>
+            <li><a href="#" data-page="prompts" class="sidebar-button">📋<span class="sidebar-label"> Prompt</span></a>
+            </li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+            <div class="header-right">
+                <button class="toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">🌞</button>
+                <span id="accountLabel" class="account-label" title=""><strong></strong></span>
+            </div>
+        </div>
+        <div class="config-controls" id="globalControls">
+            <button id="editBtn" class="edit-button">Edit</button>
+            <button id="cancelBtn" class="cancel-button" style="display:none;">Cancel</button>
+            <button id="saveBtn" class="save-button" style="display:none;">Save</button>
+        </div>
+        <div class="content">
+            <h1>Whatsapp Assistant Configuration</h1>
+            <hr class="full-width-line">
+            <!-- <div class="config-controls">
+                <button id="editBtn" class="edit-button" onclick="toggleEdit()">Edit</button>
+                <button id="saveBtn" class="save-button" onclick="saveConfig()" style="display: none;">Save</button>
+            </div>
+            <div class="config-controls" id="promptControls" style="display: none;">
+                <button id="editPromptBtn" class="edit-button" onclick="togglePromptEdit()">Edit</button>
+            </div> -->
+            <div class="form-container" id="formContainer">
+                Loading config...
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/scripts.js"></script>
+</body>
+
+</html>
